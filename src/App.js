@@ -6,15 +6,31 @@ import MovieListHeading from './Components/MovieListHeader';
 import SearchBox from './Components/SearchBox';
 
 function App() {
-
+ 
   const [movies, setMovies] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const getMovieRequest = async (searchValue) => {
+   
+    const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=a5355b8d`;
+    //console.log(url);
+    const responce = await fetch(url);
+    const responceJason = await responce.json();
+    
+    if (responceJason.Search) { 
+      console.log(responceJason);     
+      setMovies(responceJason.Search);
+    }
+  };
+
+  useEffect(() => {
+    getMovieRequest(searchValue);
+  }, [searchValue]);
 
   return (
     <div className="container.fluid movie-app">
       <div className='row d-flex align-item-center mt-4 mb-4' >
         <MovieListHeading heading="Movies" />
-        <SearchBox  searchValue={searchValue} setSearchValue={setSearchValue}/>
+        <SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
       </div>
       <div className='row'>
         <MovieList movies={movies} />
