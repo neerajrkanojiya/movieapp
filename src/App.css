@@ -23,7 +23,7 @@ body {
 }
 
 .overlay {
-	position: absolute;
+	position: fixed;
 	background: rgba(0, 0, 0, 0.8);
 	width: 100%;
 	transition: 0.5s ease;
